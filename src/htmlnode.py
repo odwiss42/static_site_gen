@@ -8,13 +8,13 @@ class HTMLNode:
         self.props = props
     
     def __repr__(self):
-        str_to_return = f'{type(self).__name__}('
+        repr = f'{type(self).__name__}('
         for att, att_value in vars(self).items():
             if type(att_value) is str:
-                str_to_return += f'{att}="{att_value}", '
+                repr += f'{att}="{att_value}", '
             else:
-                str_to_return += f'{att}={att_value}, '
-        return str_to_return.rstrip(', ') + ')'
+                repr += f'{att}={att_value}, '
+        return repr.rstrip(', ') + ')'
     
     def __eq__(self,other):
         return (
@@ -25,10 +25,12 @@ class HTMLNode:
         )
 
     def to_html(self):
-        raise NotImplementedError("This should be implemented by Subclasses")
+        raise NotImplementedError('This should be implemented by Subclasses')
     
     def props_to_html(self):
-        html_props = ""
+        html_props = ' '
+        if self.props is None:
+            return ''
         for (key, value) in self.props.items():
             html_props += key + '="' + value +'" '
         return html_props.rstrip()
@@ -40,10 +42,24 @@ class LeafNode(HTMLNode):
 
     def to_html(self):
         if self.value is None:
-            raise ValueError("All leaf nodes require a value")
+            raise ValueError('Invalid HTML: no value')
         if self.tag is None:
             return self.value
-        elif self.props is None:
-            return f"<{self.tag}>{self.value}</{self.tag}>"
-        else:
-            return f"<{self.tag} {self.props_to_html()}>{self.value}</{self.tag}>"
+        return f'<{self.tag}{self.props_to_html()}>{self.value}</{self.tag}>'
+        
+
+class ParentNode(HTMLNode):
+    def __init__(self, tag, children, props=None):
+        super().__init__(tag, None, children, props)
+
+    def to_html(self):
+        if self.tag is None:
+            raise ValueError('Invalid HTML: no tag')
+        if self.children is None:
+            raise ValueError('Invalid HTML: this is a parent node, so it should contain children')
+        opening_tag = f'<{self.tag}{self.props_to_html()}>'
+        closing_tag = f'</{self.tag}>'
+        body = ''
+        for child in self.children:
+            body += child.to_html()
+        return opening_tag + body + closing_tag

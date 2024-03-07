@@ -1,3 +1,5 @@
+from htmlnode import LeafNode
+
 text_type_text = "text"
 text_type_bold = "bold"
 text_type_italic = "italic"
@@ -22,3 +24,19 @@ class TextNode:
     def __repr__(self):
         class_name = type(self).__name__
         return f"{class_name}(text={self.text}, text_type={self.text_type}, url={self.url})"
+    
+    def text_node_to_html_node(text_node):
+        if text_node.text_type == text_type_text:
+            pass
+        elif text_node.text_type == text_type_bold:
+            pass
+        elif text_node.text_type == text_type_italic:
+            pass
+        elif text_node.text_type == text_type_code:
+            pass
+        elif text_node.text_type == text_type_link:
+            pass
+        elif text_node.text_type == text_type_image:
+            pass
+        else:
+            raise TypeError(f"Invlaid text node type: {text_node.text_type}")

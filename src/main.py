@@ -1,15 +1,36 @@
-from textnode import TextNode
+from htmlnode import (
+    HTMLNode,
+    LeafNode,
+    ParentNode)
+
 
 def main():
-    tn_1 = TextNode("testnode 1", "bold", "https://www.meatspin.co")
-    tn_2 = TextNode("testnode 1", "bold", "https://www.meatspin.co")
-    tn_3 = TextNode("not the same", "italic", "https://www.lol.com")
+    node1 = ParentNode(
+        "p",
+        [
+            LeafNode("b", "Bold text"),
+            LeafNode("a", "Click me!", props={"href": "https://www.google.com"}),
+        ],
+    )
+    node2 = ParentNode(
+        "p",
+        [
+            LeafNode("b", "Bold text"),
+            LeafNode("a", "Click me!", props={"href": "https://www.google.com"}),
+        ],
+    )
+    node3 = ParentNode(
+        "p",
+        [
+            LeafNode("b", "Bold text"),
+            LeafNode(None, "Normal text"),
+            LeafNode("i", "italic text"),
+            LeafNode(None, "Normal text"),
+        ],
+    )
 
-    print(tn_1.__repr__())
-    print(tn_3.__repr__())
-    print(tn_1.__eq__(tn_2))
-    print(tn_3.__eq__(tn_1))
-    print(tn_1)
-    print(tn_1 == tn_2)
+    nested_node = ParentNode("p",[node1,node2,node3])
+
+    print(nested_node.to_html())
     
 main()
