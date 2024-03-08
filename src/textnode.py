@@ -27,16 +27,16 @@ class TextNode:
     
     def text_node_to_html_node(text_node):
         if text_node.text_type == text_type_text:
-            pass
+            return LeafNode(None,text_node.text)
         elif text_node.text_type == text_type_bold:
-            pass
+            return LeafNode('b',text_node.text)
         elif text_node.text_type == text_type_italic:
-            pass
+            return LeafNode('i', text_node.text)
         elif text_node.text_type == text_type_code:
-            pass
+            return LeafNode('code', text_node.text)
         elif text_node.text_type == text_type_link:
-            pass
+            return LeafNode('a', text_node.text, props={'href':text_node.url})
         elif text_node.text_type == text_type_image:
-            pass
+            return LeafNode('img',"",props={"src":text_node.url, "alt":text_node.text})
         else:
-            raise TypeError(f"Invlaid text node type: {text_node.text_type}")
+            raise TypeError(f"Invalid text node type: {text_node.text_type}")
