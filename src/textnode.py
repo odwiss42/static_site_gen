@@ -25,18 +25,18 @@ class TextNode:
         class_name = type(self).__name__
         return f"{class_name}(text={self.text}, text_type={self.text_type}, url={self.url})"
     
-    def text_node_to_html_node(text_node):
-        if text_node.text_type == text_type_text:
-            return LeafNode(None,text_node.text)
-        elif text_node.text_type == text_type_bold:
-            return LeafNode('b',text_node.text)
-        elif text_node.text_type == text_type_italic:
-            return LeafNode('i', text_node.text)
-        elif text_node.text_type == text_type_code:
-            return LeafNode('code', text_node.text)
-        elif text_node.text_type == text_type_link:
-            return LeafNode('a', text_node.text, props={'href':text_node.url})
-        elif text_node.text_type == text_type_image:
-            return LeafNode('img',"",props={"src":text_node.url, "alt":text_node.text})
+    def text_node_to_html_node(self):
+        if self.text_type == text_type_text:
+            return LeafNode(None,self.text)
+        elif self.text_type == text_type_bold:
+            return LeafNode('b',self.text)
+        elif self.text_type == text_type_italic:
+            return LeafNode('i', self.text)
+        elif self.text_type == text_type_code:
+            return LeafNode('code', self.text)
+        elif self.text_type == text_type_link:
+            return LeafNode('a', self.text, props={'href':self.url})
+        elif self.text_type == text_type_image:
+            return LeafNode('img',"",props={"src":self.url, "alt":self.text})
         else:
-            raise TypeError(f"Invalid text node type: {text_node.text_type}")
+            raise TypeError(f"Invalid text node type: {self.text_type}")

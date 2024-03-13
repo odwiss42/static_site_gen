@@ -53,7 +53,7 @@ and another gfdkausdnlasmndasmlasjdlasmdmasd"""
         block = """* random text
 * another line
 * and another gfdkausdnlasmndasmlasjdlasmdmasde"""
-        expected = block_type_unordered_list
+        expected = block_type_ulist
         self.assertEqual(block_to_block_type(block),expected)
 
     def test_btbt_list_3(self):
